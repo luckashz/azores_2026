@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azores — March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #1a3a4a;
+    --teal: #2d7a6e;
+    --mist: #7aada4;
+    --sand: #e8dcc8;
+    --lava: #8b3a2a;
+    --lava-light: #c4614a;
+    --forest: #3a5c3a;
+    --cream: #f5f0e8;
+    --ink: #1c1c1c;
+    --mid: #5a5a5a;
+    --light: #9a9a9a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: var(--ocean);
+    color: white;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,122,110,0.35) 0%, transparent 70%);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -40px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122,173,164,0.2) 0%, transparent 70%);
+  }
+  .header-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--mist);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 10px;
+    font-weight: 300;
+  }
+  .islands-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .island-tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .tag-faial { background: rgba(122,173,164,0.25); color: var(--mist); border: 1px solid rgba(122,173,164,0.4); }
+  .tag-jorge { background: rgba(58,92,58,0.3); color: #8ec98e; border: 1px solid rgba(140,200,140,0.3); }
+  .tag-pico  { background: rgba(139,58,42,0.3); color: #e8896e; border: 1px solid rgba(196,97,74,0.3); }
+
+  /* ---- BOOKING CHECKLIST ---- */
+  .checklist-section {
+    background: #1c2e36;
+    color: white;
+    padding: 36px 40px;
+    border-left: 4px solid var(--lava-light);
+  }
+  .checklist-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: white;
+  }
+  .checklist-section .subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .checklist-grid { grid-template-columns: 1fr; } }
+  .checklist-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .checklist-item .ci-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .checklist-item .ci-body { flex: 1; }
+  .checklist-item .ci-title {
+    font-weight: 500;
+    font-size: 13px;
+    color: white;
+    margin-bottom: 3px;
+  }
+  .checklist-item .ci-detail {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+  .urgency-high { border-left: 3px solid var(--lava-light); }
+  .urgency-med  { border-left: 3px solid #d4a82a; }
+  .urgency-low  { border-left: 3px solid var(--mist); }
+
+  /* ---- CHECKABLE ITEMS ---- */
+  .checklist-item {
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .checklist-item:hover { background: rgba(255,255,255,0.1); }
+  .ci-check {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    border: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .checklist-item.is-checked .ci-check {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .checklist-item.is-checked .ci-check::after {
+    content: '';
+    position: absolute;
+    left: 3px; top: 0px;
+    width: 5px; height: 9px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+  .checklist-item.is-checked .ci-title { opacity: 0.45; text-decoration: line-through; }
+  .checklist-item.is-checked .ci-detail { opacity: 0.3; }
+  .checklist-item.is-checked .ci-icon { opacity: 0.4; }
+
+  /* ---- MAIN CONTENT ---- */
+  .content { padding: 0 40px 60px; max-width: 820px; margin: 0 auto; }
+
+  /* ---- ISLAND HEADER ---- */
+  .island-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 36px 0 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    margin-bottom: 4px;
+  }
+  .island-icon { font-size: 28px; }
+  .island-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+  }
+  .island-dates {
+    font-size: 12px;
+    color: var(--light);
+    margin-left: auto;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .island-faial .island-name { color: var(--teal); }
+  .island-jorge .island-name { color: var(--forest); }
+  .island-pico  .island-name { color: var(--lava); }
+
+  /* ---- DAY CARD ---- */
+  .day-card {
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: white;
+  }
+  .day-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .day-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .day-title {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 400;
+  }
+  .day-emoji { font-size: 16px; margin-left: auto; }
+
+  .day-header-faial { background: #f0f7f6; }
+  .day-header-jorge { background: #f0f5f0; }
+  .day-header-pico  { background: #f7f0ee; }
+  .day-header-transit { background: #f5f5f0; }
+
+  .day-body { padding: 16px 20px; }
+
+  /* ---- ACTIVITY ---- */
+  .activity {
+    display: flex;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    align-items: flex-start;
+  }
+  .activity:last-child { border-bottom: none; }
+  .activity-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--mist);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .dot-faial { background: var(--teal); }
+  .dot-jorge { background: var(--forest); }
+  .dot-pico  { background: var(--lava-light); }
+  .dot-note  { background: #d4a82a; }
+  .dot-optional { background: #ccc; }
+
+  .activity-text { flex: 1; font-size: 14px; line-height: 1.5; }
+  .activity-text strong { font-weight: 500; }
+  .activity-text .note {
+    display: block;
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 2px;
+  }
+  .optional-tag {
+    font-size: 10px;
+    background: rgba(0,0,0,0.06);
+    color: var(--light);
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  /* ---- TRANSIT CARD ---- */
+  .transit-card {
+    background: #f7f6f2;
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .transit-icon { font-size: 22px; }
+  .transit-info { flex: 1; }
+  .transit-route { font-weight: 500; font-size: 14px; }
+  .transit-time { font-size: 12px; color: var(--light); margin-top: 2px; }
+
+  /* ---- HIKE BADGE ---- */
+  .hike-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(58,92,58,0.1);
+    color: var(--forest);
+    border: 1px solid rgba(58,92,58,0.2);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 8px 0 4px;
+  }
+  .hike-badge-pico {
+    background: rgba(139,58,42,0.08);
+    color: var(--lava);
+    border-color: rgba(139,58,42,0.2);
+  }
+
+  /* ---- ACCOMMODATION ---- */
+  .accom-bar {
+    background: rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 14px 0 4px;
+    font-size: 12px;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .accom-bar strong { color: var(--ink); font-weight: 500; }
+
+  /* ---- WEATHER NOTE ---- */
+  .weather-note {
+    background: #fffbf0;
+    border: 1px solid rgba(212,168,42,0.3);
+    border-left: 3px solid #d4a82a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #7a6020;
+    margin: 10px 0;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding: 30px 40px;
+    font-size: 12px;
+    color: var(--light);
+    border-top: 1px solid rgba(0,0,0,0.07);
+    margin-top: 20px;
+  }
+
+  @media print {
+    body { background: white; font-size: 13px; }
+    .header { padding: 32px 28px; }
+    .content { padding: 0 28px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Travel Itinerary · Azores</div>
+  <h1>Faial · S. Jorge · Pico</h1>
+  <div class="header-sub">22 March — 2 April 2026 &nbsp;·&nbsp; 12 days</div>
+  <div class="islands-row">
+    <span class="island-tag tag-faial">🌊 Faial: Mar 22–24 + Apr 1–2</span>
+    <span class="island-tag tag-jorge">🌿 S. Jorge: Mar 24–28</span>
+    <span class="island-tag tag-pico">🌋 Pico: Mar 28–31</span>
+  </div>
+</div>
+
+<!-- BOOKING CHECKLIST -->
+<div class="checklist-section">
+  <h2>Before You Go — Book These</h2>
+  <div class="subtitle">Click to check off. State is saved in your browser.</div>
+  <div class="checklist-grid" id="checklist-grid">
+
+    <div class="checklist-item urgency-high" data-key="pico-guide" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🏔️</div>
+      <div class="ci-body">
+        <div class="ci-title">Pico Mountain Guide</div>
+        <div class="ci-detail">Books out far ahead in spring. Do this first — no guide, no summit above 1,950m.<br><em>Try: Pico Mountain Guide or local operators</em></div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-high" data-key="whale" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🐋</div>
+      <div class="ci-body">
+        <div class="ci-title">Whale Watching (Mar 30)</div>
+        <div class="ci-detail">Book 1–2 weeks ahead. Weather cancellations are common — they reschedule.<br><em>Espaço Talassa or Whale Watch Azores, Lajes do Pico</em></div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-med" data-key="diving" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🤿</div>
+      <div class="ci-body">
+        <div class="ci-title">Diving (Mar 31)</div>
+        <div class="ci-detail">Book ~1 week ahead. Confirm the evening of March 30.<br><em>Manta Diving Azores or Pico Sport</em></div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-med" data-key="uniqueijo" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🧀</div>
+      <div class="ci-body">
+        <div class="ci-title">Uniqueijo Cooperative (Mar 24)</div>
+        <div class="ci-detail">Small operation — check opening hours and confirm in advance. Can have irregular schedules.</div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-low" data-key="taxi-26" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🚕</div>
+      <div class="ci-body">
+        <div class="ci-title">S. Jorge Taxi — Mar 26 Hike</div>
+        <div class="ci-detail">Arrange via Airbnb host the night before (Mar 25). Taxi up to Serra do Topo.</div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-low" data-key="taxi-27" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">🚕</div>
+      <div class="ci-body">
+        <div class="ci-title">S. Jorge Taxi — Mar 27 Hike</div>
+        <div class="ci-detail">Arrange via Airbnb host the night before (Mar 26). Taxi up to Pico da Esperança.</div>
+      </div>
+    </div>
+
+    <div class="checklist-item urgency-low" data-key="cafe-nunes" onclick="toggleCheck(this)">
+      <div class="ci-check" aria-hidden="true"></div>
+      <div class="ci-icon">☕</div>
+      <div class="ci-body">
+        <div class="ci-title">Café Nunes (Mar 28 morning)</div>
+        <div class="ci-detail">Europe's only coffee plantation. Small operation with irregular hours — check before you go.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleCheck(el) {
+    const key = 'azores-check-' + el.dataset.key;
+    const checked = el.classList.toggle('is-checked');
+    try { localStorage.setItem(key, checked ? '1' : ''); } catch(e) {}
+  }
+  (function restoreChecks() {
+    document.querySelectorAll('.checklist-item[data-key]').forEach(el => {
+      try {
+        if (localStorage.getItem('azores-check-' + el.dataset.key) === '1') {
+          el.classList.add('is-checked');
+        }
+      } catch(e) {}
+    });
+  })();
+</script>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- ============== FAIAL (arrival) ============== -->
+  <div class="island-header island-faial">
+    <span class="island-icon">🌊</span>
+    <span class="island-name">Faial</span>
+    <span class="island-dates">Mar 22–24</span>
+  </div>
+  <div class="accom-bar">🏠 <strong>Horta</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/3388465" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
+
+  <!-- Mar 22 -->
+  <div class="day-card">
+    <div class="day-header day-header-faial">
+      <div>
+        <div class="day-date">Saturday, March 22</div>
+        <div class="day-title">Arrival & Easy Day</div>
+      </div>
+      <div class="day-emoji">✈️</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Arrival 10:00</strong> — settle in, no rush today</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Horta Marina & Old Town</strong> — walk the harbour, take your time</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Porto Pim Beach</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Monte da Guia</strong> — sunset views 🌅</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Peter Café Sport</strong> — sign the wall 🍹</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 23 -->
+  <div class="day-card">
+    <div class="day-header day-header-faial">
+      <div>
+        <div class="day-date">Sunday, March 23</div>
+        <div class="day-title">Faial Island Loop</div>
+      </div>
+      <div class="day-emoji">🚗</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Morro de Castelo Branco</strong> + <strong>Queijaria O Morro</strong> 🧀</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Capelo → Capelinhos on foot</strong> (~1h each way)
+          <span class="note">The highlight of the day — give it time, don't rush for the rest of the loop</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Praia da Fajã</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Miradouro da Ribeira das Cabras</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Praia do Almoxarife</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ferry -->
+  <div class="transit-card">
+    <div class="transit-icon">⛴️</div>
+    <div class="transit-info">
+      <div class="transit-route">Ferry: Horta → Velas (S. Jorge)</div>
+      <div class="transit-time">Sunday March 24 &nbsp;·&nbsp; 09:00 → 11:15</div>
+    </div>
+  </div>
+
+  <!-- ============== S. JORGE ============== -->
+  <div class="island-header island-jorge">
+    <span class="island-icon">🌿</span>
+    <span class="island-name">São Jorge</span>
+    <span class="island-dates">Mar 24–28</span>
+  </div>
+  <div class="accom-bar">🏠 <strong>Manadas</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/815980366992363395?source_impression_id=p3_1773940477_P3X9oe_bJxGMr4UE" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
+
+  <!-- Mar 24 afternoon -->
+  <div class="day-card">
+    <div class="day-header day-header-jorge">
+      <div>
+        <div class="day-date">Sunday, March 24</div>
+        <div class="day-title">Arrival Afternoon — Light</div>
+      </div>
+      <div class="day-emoji">⛴️</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Explore Velas town</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Arco Natural</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Miradouro do Morro</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Uniqueijo cheese cooperative</strong> 🧀
+          <span class="note">⚠️ Confirm hours in advance — small operation, can be irregular</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Fajã das Almas</strong> — easy walk, perfect for the afternoon</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 25 -->
+  <div class="day-card">
+    <div class="day-header day-header-jorge">
+      <div>
+        <div class="day-date">Monday, March 25</div>
+        <div class="day-title">Northwest: Forests & Dramatic Cliffs</div>
+      </div>
+      <div class="day-emoji">🌲</div>
+    </div>
+    <div class="day-body">
+      <div class="hike-badge">🥾 12.6 km · Circular · Medium · ~4h · <a href="https://www.alltrails.com/trail/portugal/azores/parque-florestal-das-sete-fontes-farol-da-ponta-dos-rosais" target="_blank" style="color:inherit;text-decoration:underline;">AllTrails ↗</a></div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Parque Florestal das Sete Fontes</strong> — lovely forest walk, 2–3h, easy-moderate</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Ponta dos Rosais</strong> — dramatic cliffs and lighthouse; some of the best scenery in the Azores
+          <span class="note">Trail combines both stops</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>Tonight:</strong> Book taxi for Mar 26 hike via Airbnb host</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 26 -->
+  <div class="day-card">
+    <div class="day-header day-header-jorge">
+      <div>
+        <div class="day-date">Tuesday, March 26</div>
+        <div class="day-title">North Coast Fajãs — PR01SJO</div>
+      </div>
+      <div class="day-emoji">🥾</div>
+    </div>
+    <div class="day-body">
+      <div class="hike-badge">🥾 9.3 km · Linear · Medium · ~2h 30min · <a href="https://trails.visitazores.com/en/trails-azores/sao-jorge/serra-do-topo-caldeira-de-santo-cristo-faja-dos-cubres" target="_blank" style="color:inherit;text-decoration:underline;">VisitAzores ↗</a></div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Taxi up to Serra do Topo</strong>
+          <span class="note">Leave your car at Fajã dos Cubres — it'll be waiting at the end</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Hike: Serra do Topo → Caldeira de Santo Cristo → Fajã dos Cubres</strong>
+          <span class="note">The Santo Cristo lagoon is only reachable on foot — completely wild and remote</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>Tonight:</strong> Book taxi for Mar 27 hike via Airbnb host</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 27 -->
+  <div class="day-card">
+    <div class="day-header day-header-jorge">
+      <div>
+        <div class="day-date">Wednesday, March 27</div>
+        <div class="day-title">Central Ridge to North Coast</div>
+      </div>
+      <div class="day-emoji">🥾</div>
+    </div>
+    <div class="day-body">
+      <div class="hike-badge">🥾 16 km · Linear · Medium · ~4–5h · <a href="https://trails.visitazores.com/en/trails-azores/sao-jorge/pico-do-pedro-pico-da-esperanca-faja-do-ouvidor" target="_blank" style="color:inherit;text-decoration:underline;">VisitAzores ↗</a></div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Taxi up to Pico da Esperança</strong>
+          <span class="note">Leave your car at Fajã do Ouvidor</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Hike: Pico da Esperança → Fajã do Ouvidor</strong>
+          <span class="note">Central volcanic ridge with views of both coastlines, Pico and Faial on a clear day — through forest and lava to the north coast</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Lunch at Fajã do Ouvidor</strong> — bring food or grab something in Velas beforehand</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>Piscinas Simão Dias</strong> — natural pools right at trail end, one of the best swimming spots in the Azores. Recover here 💧</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 28 morning -->
+  <div class="day-card">
+    <div class="day-header day-header-transit">
+      <div>
+        <div class="day-date">Thursday, March 28</div>
+        <div class="day-title">Light Morning + Ferry to Pico</div>
+      </div>
+      <div class="day-emoji">⛴️</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-jorge"></div>
+        <div class="activity-text"><strong>South coast detour en route to Velas:</strong><br>
+          <strong>Café Nunes</strong> ☕ (Europe's only coffee plantation) + drive past <strong>Fajã de São João</strong>
+          <span class="note">~30–40 min, completely on the way · ⚠️ Check Café Nunes opening hours in advance</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>Velas port by 10:30</strong> — comfortable for the 11:30 ferry</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ferry -->
+  <div class="transit-card">
+    <div class="transit-icon">⛴️</div>
+    <div class="transit-info">
+      <div class="transit-route">Ferry: Velas (S. Jorge) → Cais do Pico</div>
+      <div class="transit-time">Thursday March 28 &nbsp;·&nbsp; 11:30 → 12:20</div>
+    </div>
+  </div>
+
+  <!-- ============== PICO ============== -->
+  <div class="island-header island-pico">
+    <span class="island-icon">🌋</span>
+    <span class="island-name">Pico</span>
+    <span class="island-dates">Mar 28–31</span>
+  </div>
+  <div class="accom-bar">🏠 <strong>Lajido</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/1292898734812851785" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
+
+  <!-- Mar 28 afternoon -->
+  <div class="day-card">
+    <div class="day-header day-header-pico">
+      <div>
+        <div class="day-date">Thursday, March 28</div>
+        <div class="day-title">Arrival Afternoon — Light</div>
+      </div>
+      <div class="day-emoji">⛴️</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>São Roque do Pico</strong> — charming village</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Furnas de Santo António</strong> — lava tubes, short, easy, impressive</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Arcos Vulcânicos</strong> — volcanic arches along the coast</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-optional"></div>
+        <div class="activity-text"><strong>UNESCO lava wall vineyards around Lajido</strong> <span class="optional-tag">optional</span>
+          <span class="note">You're staying right in the middle of them 🍷</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>Dinner early</strong> — big day tomorrow</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 29 -->
+  <div class="day-card">
+    <div class="day-header day-header-pico">
+      <div>
+        <div class="day-date">Friday, March 29</div>
+        <div class="day-title">Pico Mountain Summit</div>
+      </div>
+      <div class="day-emoji">🏔️</div>
+    </div>
+    <div class="day-body">
+      <div class="weather-note">⛅ Weather is everything on Pico. Have March 30 in mind as a backup mentally — whale watching and diving can flex if needed.</div>
+      <div class="hike-badge hike-badge-pico">🥾🥾🥾 2,351m summit · 4–5h up · 3–4h down · Full day</div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Start 06:00–06:30</strong> from the trailhead
+          <span class="note">Trailhead: Montanha do Pico Nature Reserve entrance, end of ER3 road — about 25min drive east from Madalena, signposted. There's a small car park and the ranger/guide station at the base (~1,200m). Guide is mandatory above 1,950m — book well in advance.</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Full day — nothing else planned</strong></div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-optional"></div>
+        <div class="activity-text"><strong>Cella Bar</strong> in the evening <span class="optional-tag">optional</span><span class="note">Only if you have legs left</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 30 -->
+  <div class="day-card">
+    <div class="day-header day-header-pico">
+      <div>
+        <div class="day-date">Saturday, March 30</div>
+        <div class="day-title">Whale Watching + Afternoon Relaxation</div>
+      </div>
+      <div class="day-emoji">🐋</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Whale Watching</strong> — 3–4h tour, departing 09:00–10:00 from Lajes do Pico
+          <span class="note">Sperm whales year-round; late March may bring blue whales, sei whales, dolphins, occasional orcas<br>Book with: Espaço Talassa or Whale Watch Azores</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Afternoon (back by 13:00–14:00):</strong> Cella Bar + Piscinas Naturais da Barca + Prainha</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-optional"></div>
+        <div class="activity-text"><strong>Adega tasting</strong> at Cooperativa Vitivinícola da Ilha do Pico, Madalena 🍷 <span class="optional-tag">optional</span>
+          <span class="note">The UNESCO wine landscape in one stop — pairs well with a relaxed afternoon</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>Tonight:</strong> Confirm diving for tomorrow morning</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mar 31 -->
+  <div class="day-card">
+    <div class="day-header day-header-pico">
+      <div>
+        <div class="day-date">Sunday, March 31</div>
+        <div class="day-title">Diving + Volcanic Plateau + Ferry</div>
+      </div>
+      <div class="day-emoji">🤿</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>09:00 Guided dive</strong> — 2-tank, ~3.5h, done by 12:30–13:00
+          <span class="note">Lava arches, tunnels, resident mantas, rays, moray eels · Book with Manta Diving Azores or Pico Sport</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Planalto da Achada</strong> — eerie highland plateau with volcanic scenery
+          <span class="note">~1h stop, manageable on the way to Madalena</span>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-pico"></div>
+        <div class="activity-text"><strong>Miradouro Terr'Alta</strong> — en route back to Madalena, short stop</div>
+      </div>
+      <div class="activity">
+        <div class="activity-dot dot-note"></div>
+        <div class="activity-text"><strong>18:00 ferry Madalena → Horta</strong> — be at port by 17:30</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ferry -->
+  <div class="transit-card">
+    <div class="transit-icon">⛴️</div>
+    <div class="transit-info">
+      <div class="transit-route">Ferry: Madalena (Pico) → Horta (Faial)</div>
+      <div class="transit-time">Sunday March 31 &nbsp;·&nbsp; 18:00 · Be at port by 17:30</div>
+    </div>
+  </div>
+
+  <!-- ============== FAIAL (return) ============== -->
+  <div class="island-header island-faial">
+    <span class="island-icon">🌊</span>
+    <span class="island-name">Faial — Finale</span>
+    <span class="island-dates">Apr 1–2</span>
+  </div>
+  <div class="accom-bar">🏠 <strong>Horta</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/3388465" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a> (same as arrival)</div>
+
+  <!-- Apr 1 -->
+  <div class="day-card">
+    <div class="day-header day-header-faial">
+      <div>
+        <div class="day-date">Monday, April 1</div>
+        <div class="day-title">Caldeira de Faial Loop</div>
+      </div>
+      <div class="day-emoji">🥾</div>
+    </div>
+    <div class="day-body">
+      <div class="hike-badge">🥾🥾 ~8 km · Circular</div>
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Caldera rim loop</strong> — views down into the collapsed caldera, one of the best walks in the Azores
+          <span class="note">A perfect unhurried finale — no ferry, no early start, just enjoy it</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apr 2 -->
+  <div class="day-card">
+    <div class="day-header day-header-faial">
+      <div>
+        <div class="day-date">Tuesday, April 2</div>
+        <div class="day-title">Departure</div>
+      </div>
+      <div class="day-emoji">✈️</div>
+    </div>
+    <div class="day-body">
+      <div class="activity">
+        <div class="activity-dot dot-faial"></div>
+        <div class="activity-text"><strong>Flight 10:25</strong> — pack the night before, quick Horta breakfast, done</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Azores · March–April 2026 &nbsp;·&nbsp; Faial · São Jorge · Pico
+</div>
+
+</body>
+</html>
