@@ -3,927 +3,836 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Azores — March 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>BaLouLu · Passport · Azores 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ocean: #1a3a4a;
-    --teal: #2d7a6e;
-    --mist: #7aada4;
-    --sand: #e8dcc8;
-    --lava: #8b3a2a;
-    --lava-light: #c4614a;
-    --forest: #3a5c3a;
-    --cream: #f5f0e8;
-    --ink: #1c1c1c;
-    --mid: #5a5a5a;
-    --light: #9a9a9a;
+    --navy:   #0D1F35;
+    --gold:   #C9A84C;
+    --gold-l: #e8c96a;
+    --cream:  #FAF6EC;
+    --paper:  #F0EAD8;
+    --rule:   #D8D0BC;
+    --ink:    #1C1C1C;
+    --mid:    #666;
+    --light:  #AAA;
+    --teal:   #2D7A6E;
+    --teal-l: #3da090;
+    --forest: #2A5C2A;
+    --forest-l: #3a7c3a;
+    --lava:   #8B3A2A;
+    --lava-l: #b04d39;
+    --stamp-size: 160px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
     font-family: 'DM Sans', sans-serif;
+    background: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+    gap: 0;
+  }
+
+  /* ── PASSPORT BOOK ── */
+  .passport {
+    width: 380px;
+    background: var(--navy);
+    border-radius: 10px 10px 8px 8px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── PAGES ── */
+  .page {
+    display: none;
+    width: 100%;
+    min-height: 520px;
     background: var(--cream);
-    color: var(--ink);
-    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page.active { display: block; }
+
+  /* diagonal texture */
+  .page::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 14px,
+      rgba(0,0,0,0.018) 14px,
+      rgba(0,0,0,0.018) 15px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page > * { position: relative; z-index: 1; }
+
+  /* ── PAGE HEADER BAR ── */
+  .page-header {
+    padding: 18px 24px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .page-header.navy  { background: var(--navy); }
+  .page-header.teal  { background: var(--teal); }
+  .page-header.forest{ background: var(--forest); }
+  .page-header.lava  { background: var(--lava); }
+
+  .page-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 2px;
+  }
+  .page-header .dates {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: right;
     line-height: 1.6;
   }
 
-  /* ---- HEADER ---- */
-  .header {
-    background: var(--ocean);
-    color: white;
-    padding: 56px 40px 48px;
+  /* ── COVER PAGE ── */
+  #page-cover {
+    background: var(--navy);
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  #page-cover::before { display: none; }
+
+  .cover-cross {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, transparent calc(50% - 35px), #0A2E1C calc(50% - 35px), #0A2E1C calc(50% + 35px), transparent calc(50% + 35px)),
+      linear-gradient(45deg,  transparent calc(50% - 35px), #0A2E1C calc(50% - 35px), #0A2E1C calc(50% + 35px), transparent calc(50% + 35px)),
+      linear-gradient(to right, transparent calc(50% - 24px), #0F2035 calc(50% - 24px), #0F2035 calc(50% + 24px), transparent calc(50% + 24px)),
+      linear-gradient(to bottom, transparent calc(50% - 24px), #0F2035 calc(50% - 24px), #0F2035 calc(50% + 24px), transparent calc(50% + 24px));
+  }
+  .cover-border {
+    position: absolute;
+    inset: 14px;
+    border: 1.5px solid rgba(201,168,76,0.6);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .cover-border::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 0.5px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+  }
+  .cover-content {
     position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    bottom: -60px; right: -80px;
-    width: 320px; height: 320px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(45,122,110,0.35) 0%, transparent 70%);
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    top: -40px; left: 30%;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(122,173,164,0.2) 0%, transparent 70%);
-  }
-  .header-label {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--mist);
-    margin-bottom: 12px;
-  }
-  .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 52px;
-    font-weight: 400;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-  .header h1 em {
-    font-style: italic;
-    color: var(--mist);
-  }
-  .header-sub {
-    font-size: 14px;
-    color: rgba(255,255,255,0.55);
-    margin-top: 10px;
-    font-weight: 300;
-  }
-  .islands-row {
+    z-index: 2;
     display: flex;
-    gap: 12px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-  .island-tag {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-  .tag-faial { background: rgba(122,173,164,0.25); color: var(--mist); border: 1px solid rgba(122,173,164,0.4); }
-  .tag-jorge { background: rgba(58,92,58,0.3); color: #8ec98e; border: 1px solid rgba(140,200,140,0.3); }
-  .tag-pico  { background: rgba(139,58,42,0.3); color: #e8896e; border: 1px solid rgba(196,97,74,0.3); }
-
-  /* ---- BOOKING CHECKLIST ---- */
-  .checklist-section {
-    background: #1c2e36;
-    color: white;
-    padding: 36px 40px;
-    border-left: 4px solid var(--lava-light);
-  }
-  .checklist-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 400;
-    margin-bottom: 6px;
-    color: white;
-  }
-  .checklist-section .subtitle {
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 24px;
-    letter-spacing: 0.5px;
-  }
-  .checklist-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  @media (max-width: 600px) { .checklist-grid { grid-template-columns: 1fr; } }
-  .checklist-item {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    padding: 14px 16px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .checklist-item .ci-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .checklist-item .ci-body { flex: 1; }
-  .checklist-item .ci-title {
-    font-weight: 500;
-    font-size: 13px;
-    color: white;
-    margin-bottom: 3px;
-  }
-  .checklist-item .ci-detail {
-    font-size: 12px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.5;
-  }
-  .urgency-high { border-left: 3px solid var(--lava-light); }
-  .urgency-med  { border-left: 3px solid #d4a82a; }
-  .urgency-low  { border-left: 3px solid var(--mist); }
-
-  /* ---- CHECKABLE ITEMS ---- */
-  .checklist-item {
-    cursor: pointer;
-    transition: opacity 0.2s, background 0.2s;
-    user-select: none;
-  }
-  .checklist-item:hover { background: rgba(255,255,255,0.1); }
-  .ci-check {
-    width: 18px; height: 18px;
-    border-radius: 4px;
-    border: 2px solid rgba(255,255,255,0.3);
-    flex-shrink: 0;
-    margin-top: 2px;
-    position: relative;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .checklist-item.is-checked .ci-check {
-    background: var(--teal);
-    border-color: var(--teal);
-  }
-  .checklist-item.is-checked .ci-check::after {
-    content: '';
-    position: absolute;
-    left: 3px; top: 0px;
-    width: 5px; height: 9px;
-    border: 2px solid white;
-    border-top: none; border-left: none;
-    transform: rotate(45deg);
-  }
-  .checklist-item.is-checked .ci-title { opacity: 0.45; text-decoration: line-through; }
-  .checklist-item.is-checked .ci-detail { opacity: 0.3; }
-  .checklist-item.is-checked .ci-icon { opacity: 0.4; }
-
-  /* ---- MAIN CONTENT ---- */
-  .content { padding: 0 40px 60px; max-width: 820px; margin: 0 auto; }
-
-  /* ---- ISLAND HEADER ---- */
-  .island-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 36px 0 12px;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    margin-bottom: 4px;
-  }
-  .island-icon { font-size: 28px; }
-  .island-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 400;
-  }
-  .island-dates {
-    font-size: 12px;
-    color: var(--light);
-    margin-left: auto;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-  .island-faial .island-name { color: var(--teal); }
-  .island-jorge .island-name { color: var(--forest); }
-  .island-pico  .island-name { color: var(--lava); }
-
-  /* ---- DAY CARD ---- */
-  .day-card {
-    margin: 20px 0;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: white;
-  }
-  .day-header {
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-  .day-date {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .day-title {
-    font-size: 13px;
-    color: var(--mid);
-    font-weight: 400;
-  }
-  .day-emoji { font-size: 16px; margin-left: auto; }
-
-  .day-header-faial { background: #f0f7f6; }
-  .day-header-jorge { background: #f0f5f0; }
-  .day-header-pico  { background: #f7f0ee; }
-  .day-header-transit { background: #f5f5f0; }
-
-  .day-body { padding: 16px 20px; }
-
-  /* ---- ACTIVITY ---- */
-  .activity {
-    display: flex;
-    gap: 12px;
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-    align-items: flex-start;
-  }
-  .activity:last-child { border-bottom: none; }
-  .activity-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--mist);
-    margin-top: 7px;
-    flex-shrink: 0;
-  }
-  .dot-faial { background: var(--teal); }
-  .dot-jorge { background: var(--forest); }
-  .dot-pico  { background: var(--lava-light); }
-  .dot-note  { background: #d4a82a; }
-  .dot-optional { background: #ccc; }
-
-  .activity-text { flex: 1; font-size: 14px; line-height: 1.5; }
-  .activity-text strong { font-weight: 500; }
-  .activity-text .note {
-    display: block;
-    font-size: 12px;
-    color: var(--mid);
-    margin-top: 2px;
-  }
-  .optional-tag {
-    font-size: 10px;
-    background: rgba(0,0,0,0.06);
-    color: var(--light);
-    padding: 2px 7px;
-    border-radius: 10px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    vertical-align: middle;
-    margin-left: 6px;
-  }
-
-  /* ---- TRANSIT CARD ---- */
-  .transit-card {
-    background: #f7f6f2;
-    border: 1px dashed rgba(0,0,0,0.15);
-    border-radius: 10px;
-    padding: 14px 20px;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .transit-icon { font-size: 22px; }
-  .transit-info { flex: 1; }
-  .transit-route { font-weight: 500; font-size: 14px; }
-  .transit-time { font-size: 12px; color: var(--light); margin-top: 2px; }
-
-  /* ---- HIKE BADGE ---- */
-  .hike-badge {
-    display: inline-flex;
+    flex-direction: column;
     align-items: center;
     gap: 6px;
-    background: rgba(58,92,58,0.1);
-    color: var(--forest);
-    border: 1px solid rgba(58,92,58,0.2);
-    border-radius: 6px;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight: 500;
-    margin: 8px 0 4px;
+    text-align: center;
+    padding: 40px 30px;
   }
-  .hike-badge-pico {
-    background: rgba(139,58,42,0.08);
-    color: var(--lava);
-    border-color: rgba(139,58,42,0.2);
+  .cover-country {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .cover-sub {
+    font-size: 9px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .cover-emblem {
+    width: 90px; height: 90px;
+    margin: 10px 0;
+    position: relative;
+  }
+  .cover-emblem svg { width: 100%; height: 100%; }
+  .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .cover-subtitle {
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cover-divider {
+    width: 120px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 4px 0;
+  }
+  .cover-edition {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .cover-dates {
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1.5px;
+    margin-top: 12px;
   }
 
-  /* ---- ACCOMMODATION ---- */
-  .accom-bar {
-    background: rgba(0,0,0,0.03);
-    border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 8px;
-    padding: 10px 16px;
-    margin: 14px 0 4px;
-    font-size: 12px;
-    color: var(--mid);
+  /* ── INFO PAGE ── */
+  .info-body {
+    padding: 20px 24px;
+  }
+  .info-photo-row {
     display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .info-photo {
+    width: 88px;
+    height: 110px;
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .info-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .info-fields-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 2px;
+  }
+  .info-fields-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    margin-top: 4px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .field label {
+    font-size: 8px;
+    color: var(--light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .field span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 3px;
+  }
+  .mrz {
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+    padding: 10px 24px;
+    margin-top: 16px;
+  }
+  .mrz p {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--ink);
+    letter-spacing: 1px;
+    line-height: 2;
+  }
+
+  /* ── STAMP PAGES ── */
+  .stamps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  /* ── STAMP ── */
+  .stamp-wrap {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
   }
-  .accom-bar strong { color: var(--ink); font-weight: 500; }
+  .stamp {
+    width: var(--stamp-size);
+    height: var(--stamp-size);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .stamp:hover { transform: scale(1.04); }
+  .stamp:active { transform: scale(0.97); }
 
-  /* ---- WEATHER NOTE ---- */
-  .weather-note {
-    background: #fffbf0;
-    border: 1px solid rgba(212,168,42,0.3);
-    border-left: 3px solid #d4a82a;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #7a6020;
-    margin: 10px 0;
+  .stamp svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.3s;
+  }
+  .stamp .s-ring   { fill: none; }
+  .stamp .s-outer  { stroke-width: 2.5; }
+  .stamp .s-inner  { stroke-width: 1; stroke-dasharray: 3 4; }
+  .stamp .s-text   { font-family: 'DM Sans', sans-serif; font-weight: 700; text-transform: uppercase; }
+  .stamp .s-sub    { font-family: 'DM Sans', sans-serif; font-weight: 400; text-transform: uppercase; }
+  .stamp .s-dateline { stroke-width: 0.8; }
+
+  /* Unstamped state */
+  .stamp .unstamped { opacity: 1; transition: opacity 0.4s; }
+  .stamp .stamped-ink { opacity: 0; transition: opacity 0.4s; }
+
+  /* Stamped state */
+  .stamp.is-stamped .unstamped { opacity: 0; }
+  .stamp.is-stamped .stamped-ink { opacity: 1; }
+  .stamp.is-stamped { cursor: default; }
+  .stamp.is-stamped:hover { transform: none; }
+
+  /* Ink bleed effect on stamp */
+  @keyframes stamp-drop {
+    0%   { transform: scale(1.5); opacity: 0; }
+    60%  { transform: scale(0.92); opacity: 1; }
+    80%  { transform: scale(1.04); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .stamp.is-stamped .stamped-ink {
+    animation: stamp-drop 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
   }
 
-  /* ---- FOOTER ---- */
-  .footer {
+  /* Date line inside stamp */
+  .stamp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--mid);
+    letter-spacing: 0.5px;
     text-align: center;
-    padding: 30px 40px;
-    font-size: 12px;
-    color: var(--light);
-    border-top: 1px solid rgba(0,0,0,0.07);
-    margin-top: 20px;
+    min-height: 14px;
+    transition: opacity 0.3s;
   }
 
-  @media print {
-    body { background: white; font-size: 13px; }
-    .header { padding: 32px 28px; }
-    .content { padding: 0 28px 40px; }
+  /* ── BLANK PAGE ── */
+  .blank-page {
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .blank-watermark {
+    width: 140px; height: 140px;
+    opacity: 0.06;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 52px;
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.3); }
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+  .nav-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .nav-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .nav-dot.active { background: var(--gold); width: 14px; border-radius: 3px; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    height: 3px;
+    background: rgba(201,168,76,0.15);
+    width: 100%;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--teal), var(--gold));
+    transition: width 0.4s ease;
+  }
+
+
+  /* ── COW STAMP OVERLAY ── */
+  .cow-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .stamp.is-stamped .cow-overlay {
+    opacity: 1;
+    animation: cow-stamp 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes cow-stamp {
+    0%   { transform: scale(1.6) rotate(-8deg); opacity: 0; }
+    55%  { transform: scale(0.88) rotate(2deg); opacity: 0.82; }
+    75%  { transform: scale(1.05) rotate(-1deg); opacity: 0.78; }
+    100% { transform: scale(1) rotate(0deg); opacity: 0.72; }
+  }
+  .cow-overlay svg {
+    width: 54%;
+    height: 54%;
+  }
+  /* ── STAMP COUNTER ── */
+  .stamp-counter {
+    text-align: center;
+    padding: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 420px) {
+    .passport { width: 100%; border-radius: 0; }
+    body { padding: 0 0 60px; }
+    :root { --stamp-size: 140px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-label">Travel Itinerary · Azores</div>
-  <h1>Faial · S. Jorge · Pico</h1>
-  <div class="header-sub">22 March — 2 April 2026 &nbsp;·&nbsp; 12 days</div>
-  <div class="islands-row">
-    <span class="island-tag tag-faial">🌊 Faial: Mar 22–24 + Apr 1–2</span>
-    <span class="island-tag tag-jorge">🌿 S. Jorge: Mar 24–28</span>
-    <span class="island-tag tag-pico">🌋 Pico: Mar 28–31</span>
+<div class="passport" id="passport">
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <!-- PAGE 0: COVER -->
+  <div class="page active" id="page-0">
+    <div id="page-cover">
+      <div class="cover-cross"></div>
+      <div class="cover-border"></div>
+      <div class="cover-content">
+        <div class="cover-country">Euskal Herria</div>
+        <div class="cover-sub">Basque Country · Pays Basque</div>
+        <div class="cover-emblem">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="1.8"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="0.8"/>
+            <g stroke="rgba(201,168,76,0.7)" stroke-width="1.4">
+              <line x1="50" y1="14" x2="50" y2="30"/>
+              <line x1="50" y1="70" x2="50" y2="86"/>
+              <line x1="14" y1="50" x2="30" y2="50"/>
+              <line x1="70" y1="50" x2="86" y2="50"/>
+              <line x1="26" y1="26" x2="37" y2="37"/>
+              <line x1="63" y1="63" x2="74" y2="74"/>
+              <line x1="74" y1="26" x2="63" y2="37"/>
+              <line x1="37" y1="63" x2="26" y2="74"/>
+            </g>
+            <circle cx="50" cy="50" r="8" fill="rgba(201,168,76,0.8)"/>
+            <circle cx="50" cy="50" r="4" fill="#0D1F35"/>
+          </svg>
+        </div>
+        <div class="cover-title">Pasaporte</div>
+        <div class="cover-subtitle">Passport · Passeport</div>
+        <div class="cover-divider"></div>
+        <div class="cover-edition">Azores Adventure Edition</div>
+        <div class="cover-dates">March — April 2026 · Faial · São Jorge · Pico</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- BOOKING CHECKLIST -->
-<div class="checklist-section">
-  <h2>Before You Go — Book These</h2>
-  <div class="subtitle">Click to check off. State is saved in your browser.</div>
-  <div class="checklist-grid" id="checklist-grid">
-
-    <div class="checklist-item urgency-high" data-key="pico-guide" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🏔️</div>
-      <div class="ci-body">
-        <div class="ci-title">Pico Mountain Guide</div>
-        <div class="ci-detail">Books out far ahead in spring. Do this first — no guide, no summit above 1,950m.<br><em>Try: Pico Mountain Guide or local operators</em></div>
+  <!-- PAGE 1: INFO -->
+  <div class="page" id="page-1">
+    <div class="page-header navy">
+      <h2>BaLouLu</h2>
+      <div class="dates">Euskal Herria<br>Passport / Pasaporte</div>
+    </div>
+    <div class="info-body">
+      <div class="info-photo-row">
+        <div class="info-photo">
+          <img src="data:image/jpeg;base64,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" alt="BaLouLu">
+        </div>
+        <div class="info-fields-right">
+          <div class="field"><label>Izena / Surname</label><span>Padilha Busse</span></div>
+          <div class="field"><label>Izen Emana / Given Name</label><span>BaLouLu</span></div>
+          <div class="field"><label>Nazionalitatea</label><span>Basque / Vasca</span></div>
+          <div class="field"><label>Date of Birth</label><span>08 Jun 2025</span></div>
+        </div>
+      </div>
+      <div class="info-fields-bottom">
+        <div class="field"><label>Place of Birth</label><span>Bilbao, EH</span></div>
+        <div class="field"><label>Pasaporte No.</label><span>EH-AZR-2026</span></div>
+        <div class="field"><label>Expiry Date</label><span>02 Apr 2026</span></div>
+        <div class="field"><label>Issued By</label><span style="font-size:11px">Oficina de Aventuras</span></div>
       </div>
     </div>
-
-    <div class="checklist-item urgency-high" data-key="whale" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🐋</div>
-      <div class="ci-body">
-        <div class="ci-title">Whale Watching (Mar 30)</div>
-        <div class="ci-detail">Book 1–2 weeks ahead. Weather cancellations are common — they reschedule.<br><em>Espaço Talassa or Whale Watch Azores, Lajes do Pico</em></div>
-      </div>
+    <div class="mrz">
+      <p>P&lt;EUSPADILHABUSSE&lt;&lt;BALOULOU&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</p>
+      <p>EHAZR2026EUH2506081F2604020&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</p>
     </div>
-
-    <div class="checklist-item urgency-med" data-key="diving" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🤿</div>
-      <div class="ci-body">
-        <div class="ci-title">Diving (Mar 31)</div>
-        <div class="ci-detail">Book ~1 week ahead. Confirm the evening of March 30.<br><em>Manta Diving Azores or Pico Sport</em></div>
-      </div>
-    </div>
-
-    <div class="checklist-item urgency-med" data-key="uniqueijo" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🧀</div>
-      <div class="ci-body">
-        <div class="ci-title">Uniqueijo Cooperative (Mar 24)</div>
-        <div class="ci-detail">Small operation — check opening hours and confirm in advance. Can have irregular schedules.</div>
-      </div>
-    </div>
-
-    <div class="checklist-item urgency-low" data-key="taxi-26" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🚕</div>
-      <div class="ci-body">
-        <div class="ci-title">S. Jorge Taxi — Mar 26 Hike</div>
-        <div class="ci-detail">Arrange via Airbnb host the night before (Mar 25). Taxi up to Serra do Topo.</div>
-      </div>
-    </div>
-
-    <div class="checklist-item urgency-low" data-key="taxi-27" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">🚕</div>
-      <div class="ci-body">
-        <div class="ci-title">S. Jorge Taxi — Mar 27 Hike</div>
-        <div class="ci-detail">Arrange via Airbnb host the night before (Mar 26). Taxi up to Pico da Esperança.</div>
-      </div>
-    </div>
-
-    <div class="checklist-item urgency-low" data-key="cafe-nunes" onclick="toggleCheck(this)">
-      <div class="ci-check" aria-hidden="true"></div>
-      <div class="ci-icon">☕</div>
-      <div class="ci-body">
-        <div class="ci-title">Café Nunes (Mar 28 morning)</div>
-        <div class="ci-detail">Europe's only coffee plantation. Small operation with irregular hours — check before you go.</div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- PAGE 2: BLANK -->
+  <div class="page" id="page-2">
+    <div class="blank-page">
+      <svg class="blank-watermark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="#1C1C1C" stroke-width="1.8"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#1C1C1C" stroke-width="0.8"/>
+        <g stroke="#1C1C1C" stroke-width="1.4">
+          <line x1="50" y1="14" x2="50" y2="30"/><line x1="50" y1="70" x2="50" y2="86"/>
+          <line x1="14" y1="50" x2="30" y2="50"/><line x1="70" y1="50" x2="86" y2="50"/>
+          <line x1="26" y1="26" x2="37" y2="37"/><line x1="63" y1="63" x2="74" y2="74"/>
+          <line x1="74" y1="26" x2="63" y2="37"/><line x1="37" y1="63" x2="26" y2="74"/>
+        </g>
+        <circle cx="50" cy="50" r="8" fill="#1C1C1C"/>
+        <circle cx="50" cy="50" r="4" fill="var(--cream)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- PAGE 3–5: FAIAL STAMPS -->
+  <div class="page" id="page-3">
+    <div class="page-header teal">
+      <h2>Faial</h2>
+      <div class="dates">Azores, Portugal<br>Mar 22–24 + Apr 1–2</div>
+    </div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-1" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="9">Horta Marina</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Old Town Walk</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">Horta · Faial</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--teal)" text-transform="uppercase" opacity="0.9">HORTA MARINA</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">OLD TOWN WALK</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">HORTA · FAIAL</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-1"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-1"></div>
+      </div>
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-2" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="9">Porto Pim</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Beach</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">Horta · Faial</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--teal)" opacity="0.9">PORTO PIM</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">BEACH</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">HORTA · FAIAL</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-2"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-4">
+    <div class="page-header teal">
+      <h2>Faial</h2>
+      <div class="dates">Azores, Portugal<br>Mar 22–24 + Apr 1–2</div>
+    </div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-3" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="9">Monte da Guia</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Sunset Views</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">Faial · Azores</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--teal)" opacity="0.9">MONTE DA GUIA</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">SUNSET VIEWS</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">FAIAL · AZORES</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-3"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-3"></div>
+      </div>
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-4" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="8.5">Peter Café Sport</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Sign the Wall!</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">Horta · Faial</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--teal)" opacity="0.9">PETER CAFÉ SPORT</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">SIGN THE WALL!</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">HORTA · FAIAL</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-4"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-5">
+    <div class="page-header teal">
+      <h2>Faial</h2>
+      <div class="dates">Azores, Portugal<br>Mar 22–24 + Apr 1–2</div>
+    </div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-5" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="9">Capelinhos</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Volcanic Peninsula</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">On Foot · Faial</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--teal)" opacity="0.9">CAPELINHOS</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">VOLCANIC PENINSULA</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">ON FOOT · FAIAL</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-5"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-5"></div>
+      </div>
+      <div class="stamp-wrap">
+        <div class="stamp" data-key="faial-6" data-color="teal" onclick="doStamp(this)">
+          <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--teal)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--teal)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--teal)" font-size="8.5">Caldeira de Faial</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7.5">Caldera Rim Loop</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--teal)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--teal)" font-size="7">8km · Faial</text>
+            <g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--teal)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--teal)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--teal)" opacity="0.9">CALDEIRA DE FAIAL</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--teal)" opacity="0.8">CALDERA RIM LOOP</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--teal)" opacity="0.7">8KM · FAIAL</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--teal)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--teal)" id="date-faial-6"></text></g>
+          </svg>
+        </div>
+        <div class="stamp-date" id="label-faial-6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGES 6–8: SÃO JORGE -->
+  <div class="page" id="page-6">
+    <div class="page-header forest"><h2>São Jorge</h2><div class="dates">Azores, Portugal<br>Mar 24–28</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-1" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="9">Uniqueijo</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7.5">Cheese Cooperative 🧀</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">Velas · São Jorge</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--forest)" opacity="0.9">UNIQUEIJO</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--forest)" opacity="0.8">CHEESE COOPERATIVE</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">VELAS · SÃO JORGE</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-1"></text></g></svg></div><div class="stamp-date" id="label-jorge-1"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-2" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="8.5">Ponta dos Rosais</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">Cliffs &amp; Lighthouse</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">12.6km · Circular</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--forest)" opacity="0.9">PONTA DOS ROSAIS</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.8">CLIFFS &amp; LIGHTHOUSE</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">12.6KM · CIRCULAR</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-2"></text></g></svg></div><div class="stamp-date" id="label-jorge-2"></div></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-7">
+    <div class="page-header forest"><h2>São Jorge</h2><div class="dates">Azores, Portugal<br>Mar 24–28</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-3" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="9">Fajã das Almas</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7.5">Coastal Walk</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">São Jorge</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--forest)" opacity="0.9">FAJÃ DAS ALMAS</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--forest)" opacity="0.8">COASTAL WALK</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">SÃO JORGE</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-3"></text></g></svg></div><div class="stamp-date" id="label-jorge-3"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-4" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="9">Santo Cristo</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">Lagoon · On Foot Only</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">PR01SJO · 9.3km</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--forest)" opacity="0.9">SANTO CRISTO</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.8">LAGOON · ON FOOT ONLY</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">PR01SJO · 9.3KM</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-4"></text></g></svg></div><div class="stamp-date" id="label-jorge-4"></div></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-8">
+    <div class="page-header forest"><h2>São Jorge</h2><div class="dates">Azores, Portugal<br>Mar 24–28</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-5" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="8.5">Pico Esperança</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">Ridge to North Coast</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">16km · Linear</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--forest)" opacity="0.9">PICO ESPERANÇA</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.8">RIDGE TO NORTH COAST</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">16KM · LINEAR</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-5"></text></g></svg></div><div class="stamp-date" id="label-jorge-5"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="jorge-6" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--forest)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--forest)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--forest)" font-size="8">Piscinas Simão Dias</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7.5">Natural Pools</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--forest)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--forest)" font-size="7">Fajã do Ouvidor</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--forest)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8" fill="var(--forest)" opacity="0.9">PISCINAS SIMÃO DIAS</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--forest)" opacity="0.8">NATURAL POOLS</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--forest)" opacity="0.7">FAJÃ DO OUVIDOR</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--forest)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--forest)" id="date-jorge-6"></text></g></svg></div><div class="stamp-date" id="label-jorge-6"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGES 9–11: PICO -->
+  <div class="page" id="page-9">
+    <div class="page-header lava"><h2>Pico</h2><div class="dates">Azores, Portugal<br>Mar 28–31</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-1" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="8.5">Lajido Vineyards</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">UNESCO Wine Landscape</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Madalena · Pico</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--lava)" opacity="0.9">LAJIDO VINEYARDS</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.8">UNESCO WINE LANDSCAPE</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">MADALENA · PICO</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-1"></text></g></svg></div><div class="stamp-date" id="label-pico-1"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-2" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="8.5">Montanha do Pico</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7.5">Summit 2351m</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Full Day · Pico</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8.5" fill="var(--lava)" opacity="0.9">MONTANHA DO PICO</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--lava)" opacity="0.8">SUMMIT 2351M</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">FULL DAY · PICO</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-2"></text></g></svg></div><div class="stamp-date" id="label-pico-2"></div></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-10">
+    <div class="page-header lava"><h2>Pico</h2><div class="dates">Azores, Portugal<br>Mar 28–31</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-3" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="9">Whale Watching</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7.5">Lajes do Pico</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Sperm Whales</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--lava)" opacity="0.9">WHALE WATCHING</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--lava)" opacity="0.8">LAJES DO PICO</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">SPERM WHALES</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-3"></text></g></svg></div><div class="stamp-date" id="label-pico-3"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-4" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="9">Manta Diving</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7.5">Lava Arches &amp; Rays</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Pico · Azores</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="9" fill="var(--lava)" opacity="0.9">MANTA DIVING</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--lava)" opacity="0.8">LAVA ARCHES &amp; RAYS</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">PICO · AZORES</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-4"></text></g></svg></div><div class="stamp-date" id="label-pico-4"></div></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-11">
+    <div class="page-header lava"><h2>Pico</h2><div class="dates">Azores, Portugal<br>Mar 28–31</div></div>
+    <div class="stamps-grid">
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-5" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="8">Planalto da Achada</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7.5">Volcanic Plateau</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Pico · Azores</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8" fill="var(--lava)" opacity="0.9">PLANALTO DA ACHADA</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--lava)" opacity="0.8">VOLCANIC PLATEAU</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">PICO · AZORES</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-5"></text></g></svg></div><div class="stamp-date" id="label-pico-5"></div></div>
+      <div class="stamp-wrap"><div class="stamp" data-key="pico-6" onclick="doStamp(this)"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" class="s-ring s-outer" stroke="var(--lava)"/><circle cx="80" cy="80" r="63" class="s-ring s-inner" stroke="var(--lava)"/><text x="80" y="36" text-anchor="middle" class="s-text" fill="var(--lava)" font-size="8">Furnas Sto. António</text><text x="80" y="49" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7.5">Lava Tubes</text><line x1="50" y1="88" x2="110" y2="88" class="s-dateline" stroke="var(--lava)"/><text x="80" y="100" text-anchor="middle" class="s-sub" fill="var(--light)" font-size="6.5">DATE VISITED</text><text x="80" y="132" text-anchor="middle" class="s-sub" fill="var(--lava)" font-size="7">Pico · Azores</text><g class="stamped-ink" style="opacity:0"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--lava)" stroke-width="2.5" opacity="0.85"/><circle cx="80" cy="80" r="63" fill="none" stroke="var(--lava)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/><text x="80" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="8" fill="var(--lava)" opacity="0.9">FURNAS STO. ANTÓNIO</text><text x="80" y="49" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="var(--lava)" opacity="0.8">LAVA TUBES</text><text x="80" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7" fill="var(--lava)" opacity="0.7">PICO · AZORES</text><line x1="50" y1="88" x2="110" y2="88" stroke="var(--lava)" stroke-width="0.8" opacity="0.6"/><text x="80" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6.5" fill="#aaa" opacity="0.7">DATE VISITED</text><text x="80" y="113" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--lava)" id="date-pico-6"></text></g></svg></div><div class="stamp-date" id="label-pico-6"></div></div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="nav">
+    <button class="nav-btn" id="btn-prev" onclick="changePage(-1)" disabled>← Back</button>
+    <div class="nav-dots" id="nav-dots"></div>
+    <button class="nav-btn" id="btn-next" onclick="changePage(1)">Next →</button>
+  </div>
+
+  <div class="stamp-counter" id="stamp-counter">0 / 18 stamps collected</div>
 </div>
 
 <script>
-  function toggleCheck(el) {
-    const key = 'azores-check-' + el.dataset.key;
-    const checked = el.classList.toggle('is-checked');
-    try { localStorage.setItem(key, checked ? '1' : ''); } catch(e) {}
+const TOTAL_PAGES = 12;
+let currentPage = 0;
+
+// ── Build nav dots ────────────────────────────────────────────
+const dotsEl = document.getElementById('nav-dots');
+for (let i = 0; i < TOTAL_PAGES; i++) {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goToPage(i);
+  dotsEl.appendChild(d);
+}
+
+function goToPage(n) {
+  document.getElementById('page-' + currentPage).classList.remove('active');
+  currentPage = n;
+  document.getElementById('page-' + currentPage).classList.add('active');
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  document.getElementById('btn-prev').disabled = n === 0;
+  document.getElementById('btn-next').disabled = n === TOTAL_PAGES - 1;
+  updateProgress();
+}
+
+function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES - 1, currentPage + dir))); }
+
+function updateProgress() {
+  const pct = (currentPage / (TOTAL_PAGES - 1)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+// ── Stamp logic ───────────────────────────────────────────────
+const STAMP_KEY = 'baloulou-azores-stamps';
+
+function loadStamps() {
+  try { return JSON.parse(localStorage.getItem(STAMP_KEY) || '{}'); } catch { return {}; }
+}
+function saveStamps(data) {
+  try { localStorage.setItem(STAMP_KEY, JSON.stringify(data)); } catch {}
+}
+
+function doStamp(el) {
+  if (el.classList.contains('is-stamped')) return;
+  const key = el.dataset.key;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }).toUpperCase();
+
+  // Apply stamp visually
+  applyStamp(el, key, dateStr);
+
+  // Persist
+  const data = loadStamps();
+  data[key] = dateStr;
+  saveStamps(data);
+  updateCounter();
+}
+
+function applyStamp(el, key, dateStr) {
+  el.classList.add('is-stamped');
+  // Fill in date text inside SVG
+  const svgDate = el.querySelector('#date-' + key);
+  if (svgDate) svgDate.textContent = dateStr;
+  // Fill in label below
+  const label = document.getElementById('label-' + key);
+  if (label) label.textContent = '✓ ' + dateStr;
+  // Set cow overlay color to match stamp island color
+  const overlay = el.querySelector('.cow-overlay');
+  if (overlay) {
+    const page = el.closest('.page');
+    const header = page && page.querySelector('.page-header');
+    let color = 'var(--teal)';
+    if (header) {
+      if (header.classList.contains('forest')) color = 'var(--forest)';
+      else if (header.classList.contains('lava')) color = 'var(--lava)';
+    }
+    overlay.querySelector('svg').style.color = color;
   }
-  (function restoreChecks() {
-    document.querySelectorAll('.checklist-item[data-key]').forEach(el => {
-      try {
-        if (localStorage.getItem('azores-check-' + el.dataset.key) === '1') {
-          el.classList.add('is-checked');
-        }
-      } catch(e) {}
-    });
-  })();
+}
+
+function updateCounter() {
+  const total = document.querySelectorAll('.stamp').length;
+  const done  = document.querySelectorAll('.stamp.is-stamped').length;
+  document.getElementById('stamp-counter').textContent = done + ' / ' + total + ' stamps collected';
+}
+
+// ── Inject cow overlays into every stamp ─────────────────────
+(function injectCows() {
+  // Cow SVG path - side-view contour, Azores cow style
+  const cowSVG = `<svg viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <!-- Body -->
+    <ellipse cx="52" cy="38" rx="28" ry="16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Head -->
+    <ellipse cx="20" cy="32" rx="11" ry="9" stroke="currentColor" stroke-width="2.2"/>
+    <!-- Neck join -->
+    <line x1="29" y1="36" x2="24" y2="38" stroke="currentColor" stroke-width="2"/>
+    <!-- Snout -->
+    <ellipse cx="11" cy="34" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Nostril left -->
+    <circle cx="9.5" cy="34.5" r="0.9" fill="currentColor"/>
+    <!-- Nostril right -->
+    <circle cx="12.5" cy="34.5" r="0.9" fill="currentColor"/>
+    <!-- Eye -->
+    <circle cx="19" cy="28.5" r="1.5" fill="currentColor"/>
+    <!-- Ear -->
+    <ellipse cx="26" cy="24" rx="3.5" ry="2" stroke="currentColor" stroke-width="1.5" transform="rotate(-20 26 24)"/>
+    <!-- Horn -->
+    <path d="M24 23 C23 19 27 17 28 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Legs front -->
+    <line x1="36" y1="52" x2="35" y2="64" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="44" y1="52" x2="43" y2="64" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Legs back -->
+    <line x1="62" y1="52" x2="61" y2="64" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="70" y1="52" x2="69" y2="64" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Hooves -->
+    <path d="M33 63 Q35 65 37 63" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M41 63 Q43 65 45 63" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M59 63 Q61 65 63 63" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M67 63 Q69 65 71 63" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <!-- Udder -->
+    <path d="M48 53 Q52 58 58 53" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <line x1="50" y1="54" x2="50" y2="58" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="55" y1="54" x2="55" y2="58" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Tail -->
+    <path d="M79 36 C86 30 88 24 84 20 C83 22 82 24 84 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- Spots -->
+    <path d="M46 30 C48 27 53 28 52 32 C51 35 46 34 46 30Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+    <path d="M60 35 C62 33 66 34 65 37 C64 39 60 38 60 35Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  </svg>`;
+  document.querySelectorAll('.stamp').forEach(el => {
+    const overlay = document.createElement('div');
+    overlay.className = 'cow-overlay';
+    overlay.innerHTML = cowSVG;
+    el.appendChild(overlay);
+  });
+})();
+
+// ── Restore on load ───────────────────────────────────────────
+(function restore() {
+  const data = loadStamps();
+  for (const [key, dateStr] of Object.entries(data)) {
+    const el = document.querySelector('.stamp[data-key="' + key + '"]');
+    if (el) applyStamp(el, key, dateStr);
+  }
+  updateCounter();
+})();
+
+// ── Keyboard navigation ───────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') changePage(1);
+  if (e.key === 'ArrowLeft')  changePage(-1);
+});
 </script>
-
-<!-- MAIN CONTENT -->
-<div class="content">
-
-  <!-- ============== FAIAL (arrival) ============== -->
-  <div class="island-header island-faial">
-    <span class="island-icon">🌊</span>
-    <span class="island-name">Faial</span>
-    <span class="island-dates">Mar 22–24</span>
-  </div>
-  <div class="accom-bar">🏠 <strong>Horta</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/3388465" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
-
-  <!-- Mar 22 -->
-  <div class="day-card">
-    <div class="day-header day-header-faial">
-      <div>
-        <div class="day-date">Saturday, March 22</div>
-        <div class="day-title">Arrival & Easy Day</div>
-      </div>
-      <div class="day-emoji">✈️</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Arrival 10:00</strong> — settle in, no rush today</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Horta Marina & Old Town</strong> — walk the harbour, take your time</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Porto Pim Beach</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Monte da Guia</strong> — sunset views 🌅</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Peter Café Sport</strong> — sign the wall 🍹</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 23 -->
-  <div class="day-card">
-    <div class="day-header day-header-faial">
-      <div>
-        <div class="day-date">Sunday, March 23</div>
-        <div class="day-title">Faial Island Loop</div>
-      </div>
-      <div class="day-emoji">🚗</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Morro de Castelo Branco</strong> + <strong>Queijaria O Morro</strong> 🧀</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Capelo → Capelinhos on foot</strong> (~1h each way)
-          <span class="note">The highlight of the day — give it time, don't rush for the rest of the loop</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Praia da Fajã</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Miradouro da Ribeira das Cabras</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Praia do Almoxarife</strong></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ferry -->
-  <div class="transit-card">
-    <div class="transit-icon">⛴️</div>
-    <div class="transit-info">
-      <div class="transit-route">Ferry: Horta → Velas (S. Jorge)</div>
-      <div class="transit-time">Sunday March 24 &nbsp;·&nbsp; 09:00 → 11:15</div>
-    </div>
-  </div>
-
-  <!-- ============== S. JORGE ============== -->
-  <div class="island-header island-jorge">
-    <span class="island-icon">🌿</span>
-    <span class="island-name">São Jorge</span>
-    <span class="island-dates">Mar 24–28</span>
-  </div>
-  <div class="accom-bar">🏠 <strong>Manadas</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/815980366992363395?source_impression_id=p3_1773940477_P3X9oe_bJxGMr4UE" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
-
-  <!-- Mar 24 afternoon -->
-  <div class="day-card">
-    <div class="day-header day-header-jorge">
-      <div>
-        <div class="day-date">Sunday, March 24</div>
-        <div class="day-title">Arrival Afternoon — Light</div>
-      </div>
-      <div class="day-emoji">⛴️</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Explore Velas town</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Arco Natural</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Miradouro do Morro</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Uniqueijo cheese cooperative</strong> 🧀
-          <span class="note">⚠️ Confirm hours in advance — small operation, can be irregular</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Fajã das Almas</strong> — easy walk, perfect for the afternoon</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 25 -->
-  <div class="day-card">
-    <div class="day-header day-header-jorge">
-      <div>
-        <div class="day-date">Monday, March 25</div>
-        <div class="day-title">Northwest: Forests & Dramatic Cliffs</div>
-      </div>
-      <div class="day-emoji">🌲</div>
-    </div>
-    <div class="day-body">
-      <div class="hike-badge">🥾 12.6 km · Circular · Medium · ~4h · <a href="https://www.alltrails.com/trail/portugal/azores/parque-florestal-das-sete-fontes-farol-da-ponta-dos-rosais" target="_blank" style="color:inherit;text-decoration:underline;">AllTrails ↗</a></div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Parque Florestal das Sete Fontes</strong> — lovely forest walk, 2–3h, easy-moderate</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Ponta dos Rosais</strong> — dramatic cliffs and lighthouse; some of the best scenery in the Azores
-          <span class="note">Trail combines both stops</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>Tonight:</strong> Book taxi for Mar 26 hike via Airbnb host</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 26 -->
-  <div class="day-card">
-    <div class="day-header day-header-jorge">
-      <div>
-        <div class="day-date">Tuesday, March 26</div>
-        <div class="day-title">North Coast Fajãs — PR01SJO</div>
-      </div>
-      <div class="day-emoji">🥾</div>
-    </div>
-    <div class="day-body">
-      <div class="hike-badge">🥾 9.3 km · Linear · Medium · ~2h 30min · <a href="https://trails.visitazores.com/en/trails-azores/sao-jorge/serra-do-topo-caldeira-de-santo-cristo-faja-dos-cubres" target="_blank" style="color:inherit;text-decoration:underline;">VisitAzores ↗</a></div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Taxi up to Serra do Topo</strong>
-          <span class="note">Leave your car at Fajã dos Cubres — it'll be waiting at the end</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Hike: Serra do Topo → Caldeira de Santo Cristo → Fajã dos Cubres</strong>
-          <span class="note">The Santo Cristo lagoon is only reachable on foot — completely wild and remote</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>Tonight:</strong> Book taxi for Mar 27 hike via Airbnb host</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 27 -->
-  <div class="day-card">
-    <div class="day-header day-header-jorge">
-      <div>
-        <div class="day-date">Wednesday, March 27</div>
-        <div class="day-title">Central Ridge to North Coast</div>
-      </div>
-      <div class="day-emoji">🥾</div>
-    </div>
-    <div class="day-body">
-      <div class="hike-badge">🥾 16 km · Linear · Medium · ~4–5h · <a href="https://trails.visitazores.com/en/trails-azores/sao-jorge/pico-do-pedro-pico-da-esperanca-faja-do-ouvidor" target="_blank" style="color:inherit;text-decoration:underline;">VisitAzores ↗</a></div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Taxi up to Pico da Esperança</strong>
-          <span class="note">Leave your car at Fajã do Ouvidor</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Hike: Pico da Esperança → Fajã do Ouvidor</strong>
-          <span class="note">Central volcanic ridge with views of both coastlines, Pico and Faial on a clear day — through forest and lava to the north coast</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Lunch at Fajã do Ouvidor</strong> — bring food or grab something in Velas beforehand</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>Piscinas Simão Dias</strong> — natural pools right at trail end, one of the best swimming spots in the Azores. Recover here 💧</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 28 morning -->
-  <div class="day-card">
-    <div class="day-header day-header-transit">
-      <div>
-        <div class="day-date">Thursday, March 28</div>
-        <div class="day-title">Light Morning + Ferry to Pico</div>
-      </div>
-      <div class="day-emoji">⛴️</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-jorge"></div>
-        <div class="activity-text"><strong>South coast detour en route to Velas:</strong><br>
-          <strong>Café Nunes</strong> ☕ (Europe's only coffee plantation) + drive past <strong>Fajã de São João</strong>
-          <span class="note">~30–40 min, completely on the way · ⚠️ Check Café Nunes opening hours in advance</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>Velas port by 10:30</strong> — comfortable for the 11:30 ferry</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ferry -->
-  <div class="transit-card">
-    <div class="transit-icon">⛴️</div>
-    <div class="transit-info">
-      <div class="transit-route">Ferry: Velas (S. Jorge) → Cais do Pico</div>
-      <div class="transit-time">Thursday March 28 &nbsp;·&nbsp; 11:30 → 12:20</div>
-    </div>
-  </div>
-
-  <!-- ============== PICO ============== -->
-  <div class="island-header island-pico">
-    <span class="island-icon">🌋</span>
-    <span class="island-name">Pico</span>
-    <span class="island-dates">Mar 28–31</span>
-  </div>
-  <div class="accom-bar">🏠 <strong>Lajido</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/1292898734812851785" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a></div>
-
-  <!-- Mar 28 afternoon -->
-  <div class="day-card">
-    <div class="day-header day-header-pico">
-      <div>
-        <div class="day-date">Thursday, March 28</div>
-        <div class="day-title">Arrival Afternoon — Light</div>
-      </div>
-      <div class="day-emoji">⛴️</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>São Roque do Pico</strong> — charming village</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Furnas de Santo António</strong> — lava tubes, short, easy, impressive</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Arcos Vulcânicos</strong> — volcanic arches along the coast</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-optional"></div>
-        <div class="activity-text"><strong>UNESCO lava wall vineyards around Lajido</strong> <span class="optional-tag">optional</span>
-          <span class="note">You're staying right in the middle of them 🍷</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>Dinner early</strong> — big day tomorrow</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 29 -->
-  <div class="day-card">
-    <div class="day-header day-header-pico">
-      <div>
-        <div class="day-date">Friday, March 29</div>
-        <div class="day-title">Pico Mountain Summit</div>
-      </div>
-      <div class="day-emoji">🏔️</div>
-    </div>
-    <div class="day-body">
-      <div class="weather-note">⛅ Weather is everything on Pico. Have March 30 in mind as a backup mentally — whale watching and diving can flex if needed.</div>
-      <div class="hike-badge hike-badge-pico">🥾🥾🥾 2,351m summit · 4–5h up · 3–4h down · Full day</div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Start 06:00–06:30</strong> from the trailhead
-          <span class="note">Trailhead: Montanha do Pico Nature Reserve entrance, end of ER3 road — about 25min drive east from Madalena, signposted. There's a small car park and the ranger/guide station at the base (~1,200m). Guide is mandatory above 1,950m — book well in advance.</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Full day — nothing else planned</strong></div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-optional"></div>
-        <div class="activity-text"><strong>Cella Bar</strong> in the evening <span class="optional-tag">optional</span><span class="note">Only if you have legs left</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 30 -->
-  <div class="day-card">
-    <div class="day-header day-header-pico">
-      <div>
-        <div class="day-date">Saturday, March 30</div>
-        <div class="day-title">Whale Watching + Afternoon Relaxation</div>
-      </div>
-      <div class="day-emoji">🐋</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Whale Watching</strong> — 3–4h tour, departing 09:00–10:00 from Lajes do Pico
-          <span class="note">Sperm whales year-round; late March may bring blue whales, sei whales, dolphins, occasional orcas<br>Book with: Espaço Talassa or Whale Watch Azores</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Afternoon (back by 13:00–14:00):</strong> Cella Bar + Piscinas Naturais da Barca + Prainha</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-optional"></div>
-        <div class="activity-text"><strong>Adega tasting</strong> at Cooperativa Vitivinícola da Ilha do Pico, Madalena 🍷 <span class="optional-tag">optional</span>
-          <span class="note">The UNESCO wine landscape in one stop — pairs well with a relaxed afternoon</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>Tonight:</strong> Confirm diving for tomorrow morning</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mar 31 -->
-  <div class="day-card">
-    <div class="day-header day-header-pico">
-      <div>
-        <div class="day-date">Sunday, March 31</div>
-        <div class="day-title">Diving + Volcanic Plateau + Ferry</div>
-      </div>
-      <div class="day-emoji">🤿</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>09:00 Guided dive</strong> — 2-tank, ~3.5h, done by 12:30–13:00
-          <span class="note">Lava arches, tunnels, resident mantas, rays, moray eels · Book with Manta Diving Azores or Pico Sport</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Planalto da Achada</strong> — eerie highland plateau with volcanic scenery
-          <span class="note">~1h stop, manageable on the way to Madalena</span>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-pico"></div>
-        <div class="activity-text"><strong>Miradouro Terr'Alta</strong> — en route back to Madalena, short stop</div>
-      </div>
-      <div class="activity">
-        <div class="activity-dot dot-note"></div>
-        <div class="activity-text"><strong>18:00 ferry Madalena → Horta</strong> — be at port by 17:30</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ferry -->
-  <div class="transit-card">
-    <div class="transit-icon">⛴️</div>
-    <div class="transit-info">
-      <div class="transit-route">Ferry: Madalena (Pico) → Horta (Faial)</div>
-      <div class="transit-time">Sunday March 31 &nbsp;·&nbsp; 18:00 · Be at port by 17:30</div>
-    </div>
-  </div>
-
-  <!-- ============== FAIAL (return) ============== -->
-  <div class="island-header island-faial">
-    <span class="island-icon">🌊</span>
-    <span class="island-name">Faial — Finale</span>
-    <span class="island-dates">Apr 1–2</span>
-  </div>
-  <div class="accom-bar">🏠 <strong>Horta</strong> &nbsp;·&nbsp; <a href="https://pt.airbnb.com/rooms/3388465" target="_blank" style="color:var(--teal);text-decoration:none;">Airbnb listing ↗</a> (same as arrival)</div>
-
-  <!-- Apr 1 -->
-  <div class="day-card">
-    <div class="day-header day-header-faial">
-      <div>
-        <div class="day-date">Monday, April 1</div>
-        <div class="day-title">Caldeira de Faial Loop</div>
-      </div>
-      <div class="day-emoji">🥾</div>
-    </div>
-    <div class="day-body">
-      <div class="hike-badge">🥾🥾 ~8 km · Circular</div>
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Caldera rim loop</strong> — views down into the collapsed caldera, one of the best walks in the Azores
-          <span class="note">A perfect unhurried finale — no ferry, no early start, just enjoy it</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Apr 2 -->
-  <div class="day-card">
-    <div class="day-header day-header-faial">
-      <div>
-        <div class="day-date">Tuesday, April 2</div>
-        <div class="day-title">Departure</div>
-      </div>
-      <div class="day-emoji">✈️</div>
-    </div>
-    <div class="day-body">
-      <div class="activity">
-        <div class="activity-dot dot-faial"></div>
-        <div class="activity-text"><strong>Flight 10:25</strong> — pack the night before, quick Horta breakfast, done</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="footer">
-  Azores · March–April 2026 &nbsp;·&nbsp; Faial · São Jorge · Pico
-</div>
-
 </body>
 </html>
